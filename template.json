@@ -56,6 +56,12 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
+    "dnsLabelPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+      }
+    },
     "gatewayAuthenticationKey": {
       "type": "securestring"
     },
@@ -164,7 +170,10 @@
             "vmname": "[parameters('Name')]"
       },
       "properties": {
-        "publicIPAllocationMethod": "Dynamic"
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsLabelPrefix')]"
+        }
       }
     },
     {
@@ -283,15 +292,15 @@
           "fileUris": [ "[variables('scriptURL')]"]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ', parameters('gatewayAuthenticationKey'), ' ', reference(variables('publicIPAddressName')).ipAddress)]"
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ', parameters('gatewayAuthenticationKey'), ' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
         }
       }
     }
   ],
   "outputs": {
-    "ipAddress": {
+    "hostname": {
       "type": "string",
-      "value": "[reference(variables('publicIPAddressName')).ipAddress]"
+      "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
     }
   }
 }
