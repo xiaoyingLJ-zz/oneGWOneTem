@@ -71,7 +71,7 @@
     "allowIncomingRemoteFromCredentialManager": {
       "type": "string",
       "allowedValues": ["yes", "no"],
-      "defaultValue": "Yes"
+      "defaultValue": "yes"
     },
     "createNewVnetOrUseExisting":{
       "type": "string",
