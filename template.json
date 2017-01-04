@@ -28,9 +28,9 @@
           "Standard_F1", "Standard_F2", "Standard_F4", "Standard_F8", "Standard_F16",
           "Standard_A1_v2", "Standard_A2_v2", "Standard_A4_v2", "Standard_A8_v2", "Standard_A2M_v2", "Standard_A4M_v2", "Standard_A8M_v2",
           "Standard_A0", "Standard_A1", "Standard_A2", "Standard_A3", "Standard_A4", "Standard_A5", "Standard_A6", "Standard_A7", "Standard_A8", "Standard_A9", "Standard_A10", "Standard_A11"
-      ],
+      ]
     },
-    "User name": {
+    "userName": {
       "type": "string",
       "metadata": {
         "description": "Username for the Virtual Machine."
@@ -99,8 +99,7 @@
     "nicName": "[concat(parameters('Name'), 'Nic')]",
     "publicIPAddressName": "[concat(parameters('Name'), '-ip')]",
     "networkSecurityGroupName": "[concat(parameters('Name'), 'nsg')]",
-    "scriptURL": "https://raw.githubusercontent.com/xiaoyingLJ/oneGWVM/master/gatewayInstall.ps1",
-    "scriptParameters": "[concat('-gatewayKey ', parameters('gatewayKey'))]"
+    "scriptURL": "https://raw.githubusercontent.com/xiaoyingLJ/oneGWVM/master/gatewayInstall.ps1"
   },
   "resources": [
     {
@@ -288,7 +287,7 @@
           "fileUris": [ "[variables('scriptURL')]"]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ', parameters('gatewayKey'), ' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
+          "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File gatewayInstall.ps1 ', parameters('gatewayAuthenticationKey'), ' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
         }
       }
     }
