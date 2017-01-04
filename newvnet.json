@@ -6,6 +6,7 @@
       "type": "string"
     },
     "virtualNetworkName/subnetName":{
+      "type": "string",
       "value": "[parameters('virtualNetworkName/subnetName')]"
     }
   },
@@ -22,6 +23,9 @@
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[resourceGroup().location]",
+      "tags": {
+            "vmname": "[parameters('Name')]"
+      },
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
