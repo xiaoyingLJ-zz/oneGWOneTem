@@ -6,8 +6,7 @@
       "type": "string"
     },
     "virtualNetworkName/subnetName":{
-      "type": "string",
-      "value": "[parameters('virtualNetworkName/subnetName')]"
+      "type": "string"
     }
   },
   "variables": {
