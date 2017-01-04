@@ -12,7 +12,7 @@
     },        
     "Size": {
       "type": "string",
-      "defaultValue": "Standard_DS1_v2",
+      "defaultValue": "Standard_DS3_v2",
       "allowedValues": ["Standard_DS1_v2", "Standard_DS2_v2", "Standard_DS3_v2", "Standard_DS4_v2", "Standard_DS5_v2", 
           "Standard_DS11_v2", "Standard_DS12_v2", "Standard_DS13_v2", "Standard_DS14_v2", "Standard_DS15_v2",
           "Standard_DS1", "Standard_DS2", "Standard_DS3", "Standard_DS4",
@@ -63,10 +63,7 @@
       }
     },
     "gatewayAuthenticationKey": {
-      "type": "securestring",
-      "metadata":{
-        "description": "gateway key"
-      }
+      "type": "securestring"
     },
     "allowIncomingRemoteFromCredentialManager": {
       "type": "string",
@@ -78,10 +75,16 @@
       "defaultValue": "existing",
       "allowedValues": ["new", "existing"]
     },
-    "virtualNetworkName/subnetName":{
+    "virtualNetworkName":{
       "type": "string",
       "metadata": {
-        "description": "VNET name and its subnet name"
+        "description": "your new or existing vnet name"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "decription": "your new or existing subnet name"
       }
     }
   },
@@ -91,9 +94,8 @@
     "vnetTemplateName": "[concat(parameters('Name'), 'vnetTemplate')]",
     "nsglink": "[concat('https://raw.githubusercontent.com/xiaoyingLJ/oneGWOneTem/master/',parameters('allowIncomingRemoteFromCredentialManager'),'IncomingRemote.json')]",
     "nsgTemplateName": "[concat(parameters('Name'), 'NSGTemplate')]",
-    "vnetSettings":"[split(parameters('virtualNetworkName/subnetName'), '/')]",
-    "virtualNetworkName": "[variables('vnetSettings')[0]]",
-    "subnetName": "[variables('vnetSettings')[1]]",
+    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "subnetName": "[parameters('subnetName')]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "storageAccountName": "[take(concat(toLower(variables('prefix')), uniquestring(resourceGroup().id)), 24)]",
     "nicName": "[concat(parameters('Name'), 'Nic')]",
@@ -116,8 +118,11 @@
           "Name": {
             "value": "[parameters('Name')]"
           },
-          "virtualNetworkName/subnetName":{
-            "value": "[parameters('virtualNetworkName/subnetName')]"
+          "virtualNetworkName":{
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "subnetName":{
+            "value": "[parameters('subnetName')]"
           }
         }
       }

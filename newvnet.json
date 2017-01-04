@@ -5,14 +5,16 @@
     "Name": {
       "type": "string"
     },
-    "virtualNetworkName/subnetName":{
+    "virtualNetworkName":{
+      "type": "string"
+    },
+    "subnetName":{
       "type": "string"
     }
   },
   "variables": {
-    "vnetSettings":"[split(parameters('virtualNetworkName/subnetName'), '/')]",
-    "virtualNetworkName": "[variables('vnetSettings')[0]]",
-    "subnetName": "[variables('vnetSettings')[1]]",
+    "virtualNetworkName": "[parameters('virtualNetworkName')]",
+    "subnetName": "[parameters('subnetName')]",
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24"
   },

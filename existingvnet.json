@@ -5,8 +5,11 @@
     "Name": {
       "type": "string"
     },
-    "virtualNetworkName/subnetName":{
-      "type":"string"
+    "virtualNetworkName":{
+      "type": "string"
+    },
+    "subnetName":{
+      "type": "string"
     }
   },
   "variables": {
